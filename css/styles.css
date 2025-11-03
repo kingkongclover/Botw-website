@@ -734,3 +734,19 @@ body {
 #pixel-corners2::after {
   margin: -12px;
 }
+
+@media (max-width: 1000px) {
+  #countdown {
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  #countdown {
+    font-size: 2rem;
+  }
+
+  .infoClass {
+    font-size: 2rem;
+  }
+}
