@@ -2,7 +2,6 @@ const playerNames = [
   { name: "cIover" },
   { name: "Sosig" },
   { name: "De us" },
-  { name: "azaclover" },
   { name: "RautaMankeli"}
 ];
 
