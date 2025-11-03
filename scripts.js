@@ -6,7 +6,8 @@ const playerNames = [
   { name: "Miksukin"},
   { name: "TalkToTopsu"},
   { name: "Hogiraideri"},
-  { name: "Re s"}
+  { name: "Re s"},
+  { name: "Zezima"}
 ];
 
 async function checkHiscores(playerNames) {
