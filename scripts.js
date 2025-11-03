@@ -3,8 +3,7 @@ const playerNames = [
   { name: "Sosig" },
   { name: "De us" },
   { name: "azaclover" },
-  { name: "TalkToTopsu"},
-  { name: "ThisUserNameDoesn't exist"}
+  { name: "RautaMankeli"}
 ];
 
 async function checkHiscores(playerNames) {
