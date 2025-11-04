@@ -1,13 +1,5 @@
 const playerNames = [
-  { name: "cIover" },
-  { name: "Sosig" },
-  { name: "De us" },
-  { name: "RautaMankeli"},
-  { name: "Miksukin"},
-  { name: "TalkToTopsu"},
-  { name: "Hogiraideri"},
-  { name: "Re s"},
-  { name: "Zezima"}
+  { name: "hah a" }
 ];
 
 async function checkHiscores(playerNames) {
