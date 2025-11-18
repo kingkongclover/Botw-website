@@ -1,37 +1,41 @@
 const playerNames = [
-  { name: "hah a" }
+  { name: "cIover"}
 ];
 
 async function checkHiscores(playerNames) {
   const countdownDiv = document.getElementById("countdown");
 
   // 🕒 Target start date (7 Nov 2025 18:00 GMT)
-  const targetStart = new Date("2025-11-07T18:00:00Z");
+  // 🕒 Target start date (7 Nov 2025 18:00 GMT)
+const targetStart = new Date("2025-11-18T13:00:00Z");
 
-  // ⏱ Update countdown/count-up every second
-  function updateCountdown() {
-    const now = new Date();
-    const diff = targetStart - now;
+// ⏱ Update timer every second
+function updateCountdown() {
+  const now = new Date();
 
-    if (diff > 0) {
-      // Countdown before event start
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / (1000 * 60)) % 60);
-      const secs = Math.floor((diff / 1000) % 60);
+  const diff = now - targetStart;
 
-      countdownDiv.textContent = `BoTW starts in: ${days}d ${hours}h ${mins}m ${secs}s`;
-    } else {
-      // Count-up since event start
-      const sinceStart = now - targetStart;
-      const days = Math.floor(sinceStart / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((sinceStart / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((sinceStart / (1000 * 60)) % 60);
-      const secs = Math.floor((sinceStart / 1000) % 60);
+  if (diff < 0) {
+    // Event in the future (countdown to that date)
+    const remaining = Math.abs(diff);
+    const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
+    const mins = Math.floor((remaining / (1000 * 60)) % 60);
+    const secs = Math.floor((remaining / 1000) % 60);
 
-      countdownDiv.textContent = `BoTW ends in: ${days}d ${hours}h ${mins}m ${secs}s`;
-    }
+    countdownDiv.textContent =
+      `Next update in: ${days}d ${hours}h ${mins}m ${secs}s`;
+  } else {
+    // Event already started → count UP from that day
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+    const mins = Math.floor((diff / (1000 * 60)) % 60);
+    const secs = Math.floor((diff / 1000) % 60);
+
+    countdownDiv.textContent =
+      `Time since last update: ${days}d ${hours}h ${mins}m ${secs}s`;
   }
+}
 
   const countdownInterval = setInterval(updateCountdown, 1000);
   updateCountdown();
@@ -59,7 +63,7 @@ async function checkHiscores(playerNames) {
   for (const player of playerNames) {
     const corsProxy = "https://corsproxy.io/?";
     const templeURL = encodeURIComponent(
-      `https://templeosrs.com/api/player_gains.php?player=${player.name}&time=${secondsSince}&bosses=1`
+      `https://templeosrs.com/api/player_gains.php?player=${player.name}&time=month&bosses=0`
     );
     const playerApi = `${corsProxy}${templeURL}`;
 
