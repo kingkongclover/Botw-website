@@ -7,7 +7,7 @@ async function checkHiscores(playerNames) {
 
   // 🕒 Target start date (7 Nov 2025 18:00 GMT)
   // 🕒 Target start date (7 Nov 2025 18:00 GMT)
-const targetStart = new Date("2025-11-18T13:00:00Z");
+const targetStart = new Date("2025-11-21T3:27:00Z");
 
 // ⏱ Update timer every second
 function updateCountdown() {
