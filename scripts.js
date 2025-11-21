@@ -40,15 +40,7 @@ function updateCountdown() {
   const countdownInterval = setInterval(updateCountdown, 1000);
   updateCountdown();
 
-  // 🧩 Create main container
-  const container = document.createElement("div");
-  container.className = "container";
-  document.body.appendChild(container);
 
-  const infoRow = document.createElement("p");
-  infoRow.className = "infoClass";
-  infoRow.innerHTML = `Points since start of the event`;
-  container.appendChild(infoRow);
 
   // Calculate time difference for TempleOSRS API
   const now = new Date();
@@ -58,7 +50,7 @@ function updateCountdown() {
   console.log(`⏱ Fetching TempleOSRS gains since ${targetStart.toISOString()} (${secondsSince} seconds ago)`);
 
   // We'll gather results here to sort later
-  const results = [];
+  //const results = [];
 
   for (const player of playerNames) {
     const corsProxy = "https://corsproxy.io/?";
@@ -67,61 +59,29 @@ function updateCountdown() {
     );
     const playerApi = `${corsProxy}${templeURL}`;
 
-    try {
-      const response = await fetch(playerApi);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const response = await fetch(playerApi);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
-      const text = await response.text();
-      const data = JSON.parse(text);
-      const d = data.data || data;
+    const text = await response.text();
+    const data = JSON.parse(text);
+    const d = data.data || data;
 
-      // ✅ Safely read raid KCs
-      const cox = Number(d["Chambers of Xeric"] ?? 0);
-      const coxCm = Number(d["Chambers of Xeric Challenge Mode"] ?? 0);
-      const toa = Number(d["Tombs of Amascut"] ?? 0);
-      const toaExpert = Number(d["Tombs of Amascut Expert"] ?? 0);
-      const tob = Number(d["Theatre of Blood"] ?? 0);
-      const hmt = Number(d["Theatre of Blood Challenge Mode"] ?? 0);
 
-      const totalRaids = cox + coxCm + toa + toaExpert + tob + hmt;
+    const infoBox = document.getElementsByClassName("container");
 
-      // Save player data
-      results.push({
-        name: player.name,
-        total: totalRaids,
-        raids: { cox, coxCm, toa, toaExpert, tob, hmt }
-      });
-
-    } catch (err) {
-      console.error(`Failed to load data for ${player.name}:`, err);
-      results.push({
-        name: player.name,
-        total: 0,
-        raids: { cox: 0, coxCm: 0, toa: 0, toaExpert: 0, tob: 0, hmt: 0 },
-        error: true
-      });
-    }
-  }
-
-  // 🧮 Sort players by total raid KC (descending)
-  results.sort((a, b) => b.total - a.total);
-
-  // 🧱 Display sorted results
-  for (const player of results) {
     const row = document.createElement("div");
     row.className = "playerInfo";
 
-    if (player.error) {
-      row.innerHTML = `<h2>${player.name} — ⚠️ Error loading data</h2>`;
-    } else {
       row.innerHTML = `
-        <h2>${player.name}: ${player.total}</h2>
+        <h2>cIover</h2><br>
+        <p>${data.data.attack}</p><p></p><p></p>
       `;
-    }
 
-    container.appendChild(row);
+
+    infoBox.appendChild(row);
   }
 }
+
 
 window.addEventListener("DOMContentLoaded", () => {
   checkHiscores(playerNames);
