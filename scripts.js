@@ -109,5 +109,5 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
   checkHiscores(playerNames);
-  startTimer("2025-12-05T04:20:00Z");
+  startTimer("2025-12-05T04:37:00Z");
 });
