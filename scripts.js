@@ -2,7 +2,8 @@ const playerNames = [
   { name: "cIover"},
   { name: "azaclover"},
   { name: "TalkToTopsu"},
-  { name: "miksukin"}
+  { name: "miksukin"},
+  { name: "RautaMankeli"}
 ];
 
 function startTimer(targetDate) {
