@@ -1,32 +1,20 @@
 const playerNames = [
-  { name: "cIover"}
+  { name: "cIover"},
+  { name: "azaclover"},
+  { name: "TalkToTopsu"},
+  { name: "miksukin"}
 ];
 
-async function checkHiscores(playerNames) {
+function startTimer(targetDate) {
   const countdownDiv = document.getElementById("countdown");
+  const start = new Date(targetDate);
 
-  // 🕒 Target start date (7 Nov 2025 18:00 GMT)
-  // 🕒 Target start date (7 Nov 2025 18:00 GMT)
-const targetStart = new Date("2025-11-21T3:27:00Z");
+  function update() {
+    const now = new Date();
+    let diff = now - start;
 
-// ⏱ Update timer every second
-function updateCountdown() {
-  const now = new Date();
+    if (diff < 0) diff = 0; // Prevent negative timers
 
-  const diff = now - targetStart;
-
-  if (diff < 0) {
-    // Event in the future (countdown to that date)
-    const remaining = Math.abs(diff);
-    const days = Math.floor(remaining / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((remaining / (1000 * 60 * 60)) % 24);
-    const mins = Math.floor((remaining / (1000 * 60)) % 60);
-    const secs = Math.floor((remaining / 1000) % 60);
-
-    countdownDiv.textContent =
-      `Next update in: ${days}d ${hours}h ${mins}m ${secs}s`;
-  } else {
-    // Event already started → count UP from that day
     const days = Math.floor(diff / (1000 * 60 * 60 * 24));
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const mins = Math.floor((diff / (1000 * 60)) % 60);
@@ -35,27 +23,24 @@ function updateCountdown() {
     countdownDiv.textContent =
       `Time since last update: ${days}d ${hours}h ${mins}m ${secs}s`;
   }
+
+  update();
+  setInterval(update, 1000);
 }
 
-  const countdownInterval = setInterval(updateCountdown, 1000);
-  updateCountdown();
+async function checkHiscores(playerNames) {
 
-
-
-  // Calculate time difference for TempleOSRS API
-  const now = new Date();
-  let secondsSince = Math.floor((now - targetStart) / 1000);
-  if (secondsSince < 0) secondsSince = 0;
-
-  console.log(`⏱ Fetching TempleOSRS gains since ${targetStart.toISOString()} (${secondsSince} seconds ago)`);
-
-  // We'll gather results here to sort later
-  //const results = [];
+  const skillOrder = [
+    "Attack", "Hitpoints", "Mining", "Strength", "Agility", "Smithing",
+    "Defence", "Herblore", "Fishing", "Ranged", "Thieving", "Cooking",
+    "Prayer", "Crafting", "Firemaking", "Magic", "Fletching", "Woodcutting",
+    "Runecraft", "Slayer", "Farming", "Construction", "Hunter", "Sailing"
+  ];
 
   for (const player of playerNames) {
     const corsProxy = "https://corsproxy.io/?";
     const templeURL = encodeURIComponent(
-      `https://templeosrs.com/api/player_gains.php?player=${player.name}&time=month&bosses=0`
+      `https://templeosrs.com/api/player_stats.php?player=${player.name}&date=0`
     );
     const playerApi = `${corsProxy}${templeURL}`;
 
@@ -63,26 +48,55 @@ function updateCountdown() {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     const text = await response.text();
-    const data = JSON.parse(text);
-    const d = data.data || data;
+    const data = JSON.parse(text).data;
 
 
-    const infoBox = document.getElementsByClassName("container");
+    // ----- Build ordered skill list
+    const skillEntries = skillOrder.map(skill => {
+      const key = `${skill}_level`;
+      return { skill, level: data[key] ?? "?" };
+    });
 
-    const row = document.createElement("div");
-    row.className = "playerInfo";
 
-      row.innerHTML = `
-        <h2>cIover</h2><br>
-        <p>${data.data.attack}</p><p></p><p></p>
+    // ----- Build HTML rows (3 per row)
+    let skillHTML = "";
+    for (let i = 0; i < skillEntries.length; i += 3) {
+      const row = skillEntries.slice(i, i + 3);
+
+      skillHTML += `
+        <div class="skill-row">
+          ${row
+            .map(
+              (s) => `
+              <div class="skill-box">
+                <span class="skill-name">${s.skill}</span>
+                <span class="skill-level">${s.level}</span>
+              </div>
+            `
+            )
+            .join("")}
+        </div>
       `;
+    }
 
 
-    infoBox.appendChild(row);
+    // ----- Insert into the page
+    const container = document.querySelector(".container");
+
+    const playerDiv = document.createElement("div");
+    playerDiv.className = "playerInfo";
+    playerDiv.id = "pixel-corners2";
+    playerDiv.innerHTML = `
+      <h2>${player.name}</h2>
+      ${skillHTML}
+    `;
+
+    container.appendChild(playerDiv);
   }
 }
 
 
 window.addEventListener("DOMContentLoaded", () => {
   checkHiscores(playerNames);
+  startTimer("2025-12-05T04:20:00Z");
 });

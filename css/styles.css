@@ -122,45 +122,61 @@ body {
   height: 100vh;
 }
 
-#indexBgBoxes1 {
-  background: linear-gradient(14deg, #0b00a7, #1700e9, #260046, #7659c7);
-  background-size: 400% 400%;
-  animation: waveGradient 15s ease infinite;
-  margin: 0;
-  height: 100vh;
+.container {
+  display: flex;
+  flex-wrap: wrap;       /* Allow players to wrap to next line if needed */
+  justify-content: center; /* Center the players horizontally */
+  gap: 50px;             /* Space between player boxes */
 }
 
-#indexBgBoxes2 {
-  background: linear-gradient(59deg, #065319, #068326, #07b132, #07e93f);
-  background-size: 400% 400%;
-  animation: waveGradient 15s ease infinite;
-  margin: 0;
-  height: 100vh;
+.playerInfo {
+  background: rgba(251, 255, 0, 0.178);
 }
 
-#indexBgBoxes3 {
-  background: linear-gradient(207deg, #d0ff00, #9ec004, #849203, #5e5803);
-  background-size: 300% 300%;
-  animation: waveGradient 15s ease infinite;
-  margin: 0;
-  height: 100vh;
+.skill-container {
+  display: grid;
+  grid-template-columns: repeat(3, 120px); /* always 3 per row */
+  gap: 10px;
+  justify-content: center; /* center grid */
 }
 
-#indexBgBoxes4 {
-  background: linear-gradient(122deg, #ff0000, #ca0000, #8b0000, #5f0000);
-  background-size: 300% 300%;
-  animation: waveGradient 15s ease infinite;
-  margin: 0;
-  height: 100vh;
+
+.skill-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 5px;
+  width: 100%;
 }
 
-#indexBgBoxes5 {
-  background: linear-gradient(212deg, #ff00d4, #b40096, #96007d, #46003a);
-  background-size: 300% 300%;
-  animation: waveGradient 15s ease infinite;
+.skill-box {
+  width: 80px;       /* fixed width */
+  height: 80px;      /* fixed height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 8px;
+  color: yellow;
+  font-weight: bold;
+  text-shadow: -1px -1px 0 black,
+               1px -1px 0 black,
+               -1px 1px 0 black,
+               1px 1px 0 black;
+  word-wrap: break-word; /* wrap long skill names */
+}
+
+.skill-name, 
+.skill-level {
+  color: yellow;
+  text-shadow:
+    -1px -1px 0 black,
+     1px -1px 0 black,
+    -1px 1px 0 black,
+     1px 1px 0 black;
   margin: 0;
-  height: 100vh;
-  margin-left: 50%;
+  padding: 0;
 }
 
 .copyright {
@@ -206,144 +222,6 @@ body {
   opacity: 1 !important;
 }
 
-
-.griddy {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 10px;
-    width: 500px;
-    height: 700px;
-    margin: auto;
-}
-
-.griddy a div {
-    transition: 0.2s ease;
-    width: 250px;
-    height: 250px;
-}
-
-.griddy > a > div {
-  opacity: 0;
-  animation: fadeIn 1s ease-out forwards;
-}
-
-.griddy a:hover div {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    gap: 50px;
-    width: 1000px;
-    height: 1000px;
-    margin: auto;
-}
-
-
-.cell {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    backdrop-filter: blur(6px);       /* blur effect */
-    -webkit-backdrop-filter: blur(6px);
-}
-
-.cell .content {
-    height: 200px;
-    width: 200px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: filter 0.3s ease;
-    z-index: 1;
-}
-
-.cell p {
-    font-size: 1.3em;
-    color: yellow;
-    text-align: center;
-    text-shadow:
-        -1px -1px 0 black,
-        1px -1px 0 black,
-        -1px 1px 0 black,
-        1px 1px 0 black;
-    letter-spacing: 0.05em;
-    margin: 20px 0 5px 0;
-}
-
-.cell img {
-    height: 90px;
-    pointer-events: none;
-    user-select: none;
-}
-
-.cell .tooltip {
-    width: 200px;
-    height: 200px;
-    position: absolute;
-    inset: 0; /* full size */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.85);
-    color: yellow;
-    font-size: 1.1em;
-    text-shadow:
-        -1px -1px 0 black,
-        1px -1px 0 black,
-        -1px 1px 0 black,
-        1px 1px 0 black;
-    z-index: 2;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.cell:hover .content {
-    filter: blur(4px);
-}
-
-.cell:hover .tooltip {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.cell img {
-    height: 90px;
-    max-width: 80%;
-    max-height: 80%;
-    pointer-events: none;
-    user-select: none;
-    margin-top: 25px;
-}
-
-.cell .cross-icon {
-  position: absolute;
-  top: 57%;
-  left: 54%;
-  transform: translate(-50%, -50%);
-  font-size: 15rem; /* Adjust size as needed */
-  color: red;
-  display: none; /* Initially hidden */
-  pointer-events: none; /* So it doesn't block interactions */
-}
-
-.cell > *:not(img){
-    position: relative;
-    z-index: 1;
-}
 
 .back-button {
     position: fixed;
@@ -482,111 +360,6 @@ body {
     3px 15px,
     0px 15px);
   position: relative;
-}
-.pixel-corners {
-  border: 12px solid transparent;
-}
-.pixel-corners--wrapper {
-  width: fit-content;
-  height: fit-content;
-}
-.pixel-corners--wrapper .pixel-corners {
-  display: block;
-  clip-path: polygon(12px 21px,
-    15px 21px,
-    15px 15px,
-    21px 15px,
-    21px 12px,
-    calc(100% - 21px) 12px,
-    calc(100% - 21px) 15px,
-    calc(100% - 15px) 15px,
-    calc(100% - 15px) 21px,
-    calc(100% - 12px) 21px,
-    calc(100% - 12px) calc(100% - 21px),
-    calc(100% - 15px) calc(100% - 21px),
-    calc(100% - 15px) calc(100% - 15px),
-    calc(100% - 21px) calc(100% - 15px),
-    calc(100% - 21px) calc(100% - 12px),
-    21px calc(100% - 12px),
-    21px calc(100% - 15px),
-    15px calc(100% - 15px),
-    15px calc(100% - 21px),
-    12px calc(100% - 21px));
-}
-.pixel-corners::after,
-.pixel-corners--wrapper::after {
-  content: "";
-  position: absolute;
-  clip-path: polygon(0px calc(100% - 15px),
-    3px calc(100% - 15px),
-    3px calc(100% - 9px),
-    6px calc(100% - 9px),
-    6px calc(100% - 6px),
-    9px calc(100% - 6px),
-    9px calc(100% - 3px),
-    15px calc(100% - 3px),
-    15px 100%,
-    calc(100% - 15px) 100%,
-    calc(100% - 15px) calc(100% - 3px),
-    calc(100% - 9px) calc(100% - 3px),
-    calc(100% - 9px) calc(100% - 6px),
-    calc(100% - 6px) calc(100% - 6px),
-    calc(100% - 6px) calc(100% - 9px),
-    calc(100% - 3px) calc(100% - 9px),
-    calc(100% - 3px) calc(100% - 15px),
-    100% calc(100% - 15px),
-    100% 15px,
-    calc(100% - 3px) 15px,
-    calc(100% - 3px) 9px,
-    calc(100% - 6px) 9px,
-    calc(100% - 6px) 6px,
-    calc(100% - 9px) 6px,
-    calc(100% - 9px) 3px,
-    calc(100% - 15px) 3px,
-    calc(100% - 15px) 0px,
-    15px 0px,
-    15px 3px,
-    9px 3px,
-    9px 6px,
-    6px 6px,
-    6px 9px,
-    3px 9px,
-    3px 15px,
-    0px 15px,
-    0px 50%,
-    12px 50%,
-    12px 21px,
-    15px 21px,
-    15px 15px,
-    21px 15px,
-    21px 12px,
-    calc(100% - 21px) 12px,
-    calc(100% - 21px) 15px,
-    calc(100% - 15px) 15px,
-    calc(100% - 15px) 21px,
-    calc(100% - 12px) 21px,
-    calc(100% - 12px) calc(100% - 21px),
-    calc(100% - 15px) calc(100% - 21px),
-    calc(100% - 15px) calc(100% - 15px),
-    calc(100% - 21px) calc(100% - 15px),
-    calc(100% - 21px) calc(100% - 12px),
-    21px calc(100% - 12px),
-    21px calc(100% - 15px),
-    15px calc(100% - 15px),
-    15px calc(100% - 21px),
-    12px calc(100% - 21px),
-    12px 50%,
-    0px 50%);
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: #000000;
-  display: block;
-  pointer-events: none;
-}
-.pixel-corners::after {
-  margin: -12px;
 }
 
 #pixel-corners2,
@@ -727,9 +500,10 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: #d4ff00;
+  background: rgb(12, 12, 12);
   display: block;
   pointer-events: none;
+  z-index: -999;
 }
 #pixel-corners2::after {
   margin: -12px;
