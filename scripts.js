@@ -96,7 +96,18 @@ async function checkHiscores(playerNames) {
 }
 
 
+
 window.addEventListener("DOMContentLoaded", () => {
+  const copyright = document.querySelector('.copyright');
+    const clickSound = document.getElementById('clickSound');
+
+    if (copyright && clickSound) {
+        copyright.addEventListener('click', () => {
+            clickSound.currentTime = 0; // start from beginning
+            clickSound.play().catch(err => console.log(err));
+        });
+    }
+
   checkHiscores(playerNames);
   startTimer("2025-12-05T04:20:00Z");
 });
